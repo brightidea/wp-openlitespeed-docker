@@ -4,7 +4,7 @@ WORKDIR /usr/local/lsws/
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget
-
+RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | bash
 RUN wget -O /etc/apt/trusted.gpg.d/lst_debian_repo.gpg http://rpms.litespeedtech.com/debian/lst_debian_repo.gpg
 RUN wget -O /etc/apt/trusted.gpg.d/lst_repo.gpg http://rpms.litespeedtech.com/debian/lst_repo.gpg
 
@@ -12,7 +12,8 @@ RUN echo "deb http://rpms.litespeedtech.com/debian/ xenial main" > /etc/apt/sour
 RUN echo "deb http://rpms.litespeedtech.com/edge/debian/ xenial main" >> /etc/apt/sources.list.d/lst_debian_repo.list
 RUN apt-get update
 RUN apt-get install -y openlitespeed
-RUN apt-get install -y --no-install-recommends lsphp73 lsphp73-common lsphp73-mysql lsphp73-json lsphp73-redis lsphp73-opcache lsphp73-imap lsphp73-dev lsphp73-curl lsphp73-dbg lsphp73-imagick lsphp73-simplexml lsphp73-soap lsphp73-xmlreader lsphp73-xmlwriter lsphp73-xml lsphp73-xmlrpc lsphp73-zip lsphp73-mcrypt
+yum install lsphp73 lsphp73-common lsphp73-mysql lsphp73-gd lsphp73-process lsphp73-mbstring lsphp73-xml lsphp73-curl lsphp73-mcrypt lsphp73-pdo lsphp73-imap lsphp73-soap lsphp73-bcmath lsphp73-json lsphp73-redis lsphp73-opcache lsphp73-imagick lsphp73-zip
+
 RUN ln -s /usr/local/lsws/lsphp73/bin/php7.3 /usr/bin/php
 
 # Installing wordpress
