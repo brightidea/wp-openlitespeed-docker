@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
 WORKDIR /usr/local/lsws/
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget
 
