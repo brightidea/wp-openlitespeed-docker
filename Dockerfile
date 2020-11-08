@@ -4,13 +4,9 @@ WORKDIR /usr/local/lsws/
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget
+RUN wget -O /etc/apt/trusted.gpg.d/lst_repo.gpg http://rpms.litespeedtech.com/debian/lst_repo.gpg
 RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | bash
 
-RUN wget -O /etc/apt/trusted.gpg.d/lst_debian_repo.gpg http://rpms.litespeedtech.com/debian/lst_debian_repo.gpg
-RUN wget -O /etc/apt/trusted.gpg.d/lst_repo.gpg http://rpms.litespeedtech.com/debian/lst_repo.gpg
-
-RUN echo "deb http://rpms.litespeedtech.com/debian/ xenial main" > /etc/apt/sources.list.d/lst_debian_repo.list
-RUN echo "deb http://rpms.litespeedtech.com/edge/debian/ xenial main" >> /etc/apt/sources.list.d/lst_debian_repo.list
 RUN apt-get update
 RUN apt-get install -y openlitespeed
 RUN apt-get install lsphp73 lsphp73-common lsphp73-mysql lsphp73-gd lsphp73-process lsphp73-mbstring lsphp73-xml lsphp73-curl lsphp73-mcrypt lsphp73-pdo lsphp73-imap lsphp73-soap lsphp73-bcmath lsphp73-json lsphp73-redis lsphp73-opcache lsphp73-imagick lsphp73-zip
