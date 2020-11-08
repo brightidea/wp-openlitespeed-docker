@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 WORKDIR /usr/local/lsws/
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -9,9 +9,9 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
 
 RUN apt-get update
 RUN apt-get install -y openlitespeed
-RUN apt-get install lsphp73 lsphp73-common lsphp73-mysql lsphp73-gd lsphp73-process lsphp73-mbstring lsphp73-xml lsphp73-curl lsphp73-mcrypt lsphp73-pdo lsphp73-imap lsphp73-soap lsphp73-bcmath lsphp73-json lsphp73-redis lsphp73-opcache lsphp73-imagick lsphp73-zip
+RUN apt-get install lsphp74 lsphp74-common lsphp74-mysql lsphp74-gd lsphp74-process lsphp74-mbstring lsphp74-xml lsphp74-curl lsphp74-mcrypt lsphp74-pdo lsphp74-imap lsphp74-soap lsphp74-bcmath lsphp74-json lsphp74-redis lsphp74-opcache lsphp74-imagick lsphp74-zip
 
-RUN ln -s /usr/local/lsws/lsphp73/bin/php7.3 /usr/bin/php
+RUN ln -s /usr/local/lsws/lsphp74/bin/php7.4 /usr/bin/php
 
 # Installing wordpress
 RUN wget --no-check-certificate http://wordpress.org/latest.tar.gz
@@ -21,7 +21,7 @@ RUN wget -q -r --level=0 -nH --cut-dirs=2 --no-parent https://plugins.svn.wordpr
 RUN chown -R --reference=./autoupdate ./wordpress
 
 #
-RUN rm -rf /usr/local/lsws/conf/httpd_config.conf /usr/local/lsws/lsphp73/etc/php/7.3/litespeed/php.ini /var/lib/apt/lists/* ./enable_lst_debain_repo.sh /usr/local/lsws/conf/vhosts/Example && apt-get remove --purge -y wget
+RUN rm -rf /usr/local/lsws/conf/httpd_config.conf /usr/local/lsws/lsphp74/etc/php/7.4/litespeed/php.ini /var/lib/apt/lists/* ./enable_lst_debain_repo.sh /usr/local/lsws/conf/vhosts/Example && apt-get remove --purge -y wget
 
 RUN touch /usr/local/lsws/logs/error.log \
     && touch /usr/local/lsws/logs/access.log \
@@ -31,7 +31,7 @@ RUN touch /usr/local/lsws/logs/error.log \
     && ln -sf /usr/local/lsws/lsphp73/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp7
 
 COPY ./config/httpd_config.conf /usr/local/lsws/conf/
-COPY ./config/php.ini /usr/local/lsws/lsphp73/etc/php/7.3/litespeed/
+COPY ./config/php.ini /usr/local/lsws/lsphp74/etc/php/7.4/litespeed/
 COPY ./config/entrypoint.sh /
 
 RUN chmod +x /entrypoint.sh
