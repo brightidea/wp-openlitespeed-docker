@@ -9,7 +9,7 @@ RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | b
 
 RUN apt-get update
 RUN apt-get install -y openlitespeed
-RUN apt-get install lsphp74 lsphp74-common lsphp74-mysql lsphp74-gd lsphp74-process lsphp74-mbstring lsphp74-xml lsphp74-curl lsphp74-mcrypt lsphp74-pdo lsphp74-imap lsphp74-soap lsphp74-bcmath lsphp74-json lsphp74-redis lsphp74-opcache lsphp74-imagick lsphp74-zip
+RUN apt-get install lsphp74 lsphp74-mysqlnd lsphp74-process lsphp74-mbstring lsphp74-mcrypt lsphp74-gd lsphp74-opcache lsphp74-bcmath lsphp74-pdo lsphp74-common lsphp74-xml
 
 RUN ln -s /usr/local/lsws/lsphp74/bin/php7.4 /usr/bin/php
 
