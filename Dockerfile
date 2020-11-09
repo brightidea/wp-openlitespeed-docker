@@ -1,18 +1,9 @@
-FROM ubuntu:18.04
+FROM litespeedtech/openlitespeed:latest
 
 WORKDIR /usr/local/lsws/
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget
-RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | sudo bash
-
-RUN sudo apt update
-RUN sudo apt-get install openlitespeed
-
-RUN apt-get install -y openlitespeed
-RUN sudo apt-get install lsphp74 lsphp74-common lsphp74-mysql lsphp74-dev lsphp74-curl lsphp74-dbg -y
-
-RUN ln -s /usr/local/lsws/lsphp74/bin/php7.4 /usr/bin/php
 
 # Installing wordpress
 RUN wget --no-check-certificate http://wordpress.org/latest.tar.gz
