@@ -4,12 +4,13 @@ WORKDIR /usr/local/lsws/
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget
-RUN wget -O /etc/apt/trusted.gpg.d/lst_repo.gpg http://rpms.litespeedtech.com/debian/lst_repo.gpg
-RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | bash
+RUN wget -O - http://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh | sudo bash
 
-RUN apt-get update
+RUN sudo apt update
+RUN sudo apt-get install openlitespeed
+
 RUN apt-get install -y openlitespeed
-RUN apt-get install lsphp74 lsphp74-mysqlnd lsphp74-process lsphp74-mbstring lsphp74-mcrypt lsphp74-gd lsphp74-opcache lsphp74-bcmath lsphp74-pdo lsphp74-common lsphp74-xml
+RUN sudo apt-get install lsphp74 lsphp74-common lsphp74-mysql lsphp74-dev lsphp74-curl lsphp74-dbg -y
 
 RUN ln -s /usr/local/lsws/lsphp74/bin/php7.4 /usr/bin/php
 
@@ -27,8 +28,8 @@ RUN touch /usr/local/lsws/logs/error.log \
     && touch /usr/local/lsws/logs/access.log \
     # && ln -sf /dev/stdout /usr/local/lsws/logs/access.log \
     # && ln -sf /dev/stderr /usr/local/lsws/logs/error.log \
-    && ln -sf /usr/local/lsws/lsphp73/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
-    && ln -sf /usr/local/lsws/lsphp73/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp7
+    && ln -sf /usr/local/lsws/lsphp74/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp \
+    && ln -sf /usr/local/lsws/lsphp74/bin/lsphp /usr/local/lsws/fcgi-bin/lsphp7
 
 COPY ./config/httpd_config.conf /usr/local/lsws/conf/
 COPY ./config/php.ini /usr/local/lsws/lsphp74/etc/php/7.4/litespeed/
